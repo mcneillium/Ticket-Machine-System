@@ -48,7 +48,7 @@ To run this project, you will need:
 ### Running the Application
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/mcneillium/TicketMachineSystem.git
+   git clone https://github.com/mcneillium/Ticket-Machine-System.git
 
 
 ## Getting Started
