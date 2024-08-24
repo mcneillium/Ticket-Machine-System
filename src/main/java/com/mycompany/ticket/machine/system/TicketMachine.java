@@ -5,13 +5,11 @@ package com.mycompany.ticket.machine.system;
 public class TicketMachine {
     // The main method is the starting point of the Java application.
     public static void main(String[] args) {
-        // Create an instance of StandardTicket.
-        // This object will have the type "Standard" and price 10.0.
-        Ticket standardTicket = new StandardTicket();
+        // Create an instance of StandardTicket with a quantity of 1.
+        Ticket standardTicket = new StandardTicket(1);
 
-        // Create an instance of StudentTicket.
-        // This object will have the type "Student" and price 5.0.
-        Ticket studentTicket = new StudentTicket();
+        // Create an instance of StudentTicket with a quantity of 1.
+        Ticket studentTicket = new StudentTicket(1);
 
         // Create an instance of TicketPrinter to print the ticket details.
         TicketPrinter printer = new TicketPrinter();
@@ -21,5 +19,11 @@ public class TicketMachine {
 
         // Print the details of the student ticket.
         printer.printTicket(studentTicket);
+    }
+
+    // Method to issue a ticket (added for GUI compatibility).
+    public void issueTicket(Ticket ticket) {
+        TicketPrinter printer = new TicketPrinter();
+        printer.printTicket(ticket);
     }
 }
