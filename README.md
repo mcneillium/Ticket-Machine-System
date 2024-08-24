@@ -46,12 +46,23 @@ TicketMachineSystem/
 #Prerequisites
 
 To run this project, you will need:
+- **Java 8 or later**: Make sure JDK 8 is installed.
+- **Maven**: The project uses Maven for dependency management and build automation.
+- **NetBeans IDE**: This project was developed using Apache NetBeans IDE.
 
-Java 8 or later: Ensure JDK 8 or later is installed.
+### Running the Application
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/mcneillium/TicketMachineSystem.git
 
-Maven: The project uses Maven for dependency management and build automation.
 
-NetBeans IDE: This project was developed using Apache NetBeans IDE, though any IDE with Maven support should work.
+## Getting Started
+
+### Prerequisites
+To run this project, you will need:
+- **Java 8 or later**: Make sure JDK 8 is installed.
+- **Maven**: The project uses Maven for dependency management and build automation.
+- **NetBeans IDE**: This project was developed using Apache NetBeans IDE.
 
 ##Running the Application
 
@@ -95,5 +106,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ##Contact
 
 If you have any questions or need further assistance, please contact me at paulmcneill1989@hotmail.co.uk.
-
-
