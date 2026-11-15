@@ -1,19 +1,10 @@
 package com.mycompany.ticket.machine.system;
 
+// Inheritance: a Student ticket is a Ticket with its own type and price (5.0).
+// Quantity, total price and toString() come from Ticket.
 public class StudentTicket extends Ticket {
-    private int quantity;
 
     public StudentTicket(int quantity) {
-        super("Student", 5.0);  // Pass the type and price to the Ticket superclass
-        this.quantity = quantity;
-    }
-
-    @Override
-    public String toString() {
-        return "StudentTicket{" +
-               "quantity=" + quantity +
-               ", type=" + getType() +
-               ", price=" + getPrice() +
-               '}';
+        super("Student", 5.0, quantity);
     }
 }

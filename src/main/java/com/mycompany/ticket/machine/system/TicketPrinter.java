@@ -3,13 +3,15 @@ package com.mycompany.ticket.machine.system;
 // The TicketPrinter class is responsible for printing the details of any Ticket object.
 // It demonstrates polymorphism by accepting any subclass of Ticket and treating it the same way.
 public class TicketPrinter {
-    // Method to print the details of the ticket.
-    // It accepts a Ticket object (or any subclass of Ticket) as a parameter.
+
+    // The text printed for a ticket; kept separate so it can be tested.
+    public String format(Ticket ticket) {
+        return String.format("%d x %s ticket at £%.2f = £%.2f",
+                ticket.getQuantity(), ticket.getType(), ticket.getPrice(), ticket.getTotalPrice());
+    }
+
+    // Accepts a Ticket object (or any subclass of Ticket) as a parameter.
     public void printTicket(Ticket ticket) {
-        // Print the type of the ticket.
-        System.out.println("Ticket Type: " + ticket.getType());
-        
-        // Print the price of the ticket.
-        System.out.println("Price: $" + ticket.getPrice());
+        System.out.println(format(ticket));
     }
 }

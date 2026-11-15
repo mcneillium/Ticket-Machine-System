@@ -53,23 +53,30 @@ public class TicketMachineGUI extends Application {
         GridPane.setConstraints(ticketInfoLabel, 1, 3);
 
         purchaseButton.setOnAction(e -> {
-            String type = typeComboBox.getValue();  // Get the selected value from ComboBox
-            int quantity = Integer.parseInt(quantityInput.getText());
-
-            Ticket ticket;
-            if ("Student".equalsIgnoreCase(type)) {
-                ticket = new StudentTicket(quantity);
-            } else {
-                ticket = new StandardTicket(quantity);
+            int quantity;
+            try {
+                quantity = TicketMachine.parseQuantity(quantityInput.getText());
+            } catch (IllegalArgumentException ex) {
+                // Before, an empty or non-numeric box crashed the handler silently.
+                showError(ex.getMessage());
+                return;
             }
 
+            // Polymorphism: from here on the code only knows it has a Ticket.
+            Ticket ticket = "Student".equalsIgnoreCase(typeComboBox.getValue())
+                    ? new StudentTicket(quantity)
+                    : new StandardTicket(quantity);
+
             ticketMachine.issueTicket(ticket);
+            ticketInfoLabel.setText(String.format("Takings so far: £%.2f from %d tickets",
+                    ticketMachine.getTakings(), ticketMachine.getTicketsSold()));
             showTicketDialog(ticket);
+            quantityInput.clear();
         });
 
         grid.getChildren().addAll(typeLabel, typeComboBox, quantityLabel, quantityInput, purchaseButton, ticketInfoLabel);
 
-        Scene scene = new Scene(grid, 400, 200);
+        Scene scene = new Scene(grid, 420, 190);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -78,12 +85,19 @@ public class TicketMachineGUI extends Application {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Ticket Purchased");
         alert.setHeaderText(null);
-        alert.setContentText("You have purchased a " + ticket.getType() + " ticket.\n\n" +
-                             "Ticket Details:\n" +
-                             "Type: " + ticket.getType() + "\n" +
-                             "Price: £" + ticket.getPrice() + "\n" +
-                             "Thank you for your purchase!");
+        alert.setContentText(String.format(
+                "You have bought %d %s ticket%s.%n%n"
+                + "Price each: £%.2f%nTotal: £%.2f%n%nThank you for your purchase!",
+                ticket.getQuantity(), ticket.getType(), ticket.getQuantity() == 1 ? "" : "s",
+                ticket.getPrice(), ticket.getTotalPrice()));
+        alert.showAndWait();
+    }
 
+    private void showError(String message) {
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.setTitle("Check the quantity");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
         alert.showAndWait();
     }
 

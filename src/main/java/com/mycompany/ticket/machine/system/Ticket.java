@@ -7,12 +7,47 @@ public class Ticket {
     // These fields are private to enforce encapsulation, meaning they can't be accessed directly outside this class.
     private String type;
     private double price;
+    // How many of this ticket were bought. Held here, not in each subclass,
+    // so every ticket type gets it (and its total) for free.
+    private int quantity = 1;
 
     // Constructor to initialize a Ticket object with a specific type and price.
     // This constructor will be used by subclasses to set their specific values.
     public Ticket(String type, double price) {
         this.type = type;
         this.price = price;
+    }
+
+    // Constructor used by the subclasses, which also know the quantity.
+    public Ticket(String type, double price, int quantity) {
+        this(type, price);
+        setQuantity(quantity);
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    // Encapsulation at work: the object refuses a quantity that makes no sense.
+    public void setQuantity(int quantity) {
+        if (quantity < 1) {
+            throw new IllegalArgumentException("Quantity must be at least 1.");
+        }
+        this.quantity = quantity;
+    }
+
+    // Price of one ticket multiplied by how many were bought.
+    public double getTotalPrice() {
+        return price * quantity;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "{" +
+               "quantity=" + quantity +
+               ", type=" + type +
+               ", price=" + price +
+               '}';
     }
 
     // Getter method for the type field.
