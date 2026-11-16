@@ -31,8 +31,8 @@ public class TicketMachineGUI extends Application {
 
         // Ticket type ComboBox
         ComboBox<String> typeComboBox = new ComboBox<>();
-        typeComboBox.getItems().addAll("Standard", "Student");
-        typeComboBox.setValue("Standard");
+        typeComboBox.getItems().addAll(TicketMachine.ticketTypes());
+        typeComboBox.setValue(TicketMachine.ticketTypes().getFirst());
         GridPane.setConstraints(typeComboBox, 1, 0);
 
         // Quantity label
@@ -52,7 +52,7 @@ public class TicketMachineGUI extends Application {
         Label ticketInfoLabel = new Label();
         GridPane.setConstraints(ticketInfoLabel, 1, 3);
 
-        purchaseButton.setOnAction(e -> {
+        purchaseButton.setOnAction(_ -> {
             int quantity;
             try {
                 quantity = TicketMachine.parseQuantity(quantityInput.getText());
@@ -63,9 +63,7 @@ public class TicketMachineGUI extends Application {
             }
 
             // Polymorphism: from here on the code only knows it has a Ticket.
-            Ticket ticket = "Student".equalsIgnoreCase(typeComboBox.getValue())
-                    ? new StudentTicket(quantity)
-                    : new StandardTicket(quantity);
+            Ticket ticket = TicketMachine.createTicket(typeComboBox.getValue(), quantity);
 
             ticketMachine.issueTicket(ticket);
             ticketInfoLabel.setText(String.format("Takings so far: £%.2f from %d tickets",

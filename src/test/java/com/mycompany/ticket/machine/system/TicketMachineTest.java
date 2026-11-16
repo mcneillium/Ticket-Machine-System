@@ -3,6 +3,7 @@ package com.mycompany.ticket.machine.system;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class TicketMachineTest {
@@ -48,5 +49,19 @@ class TicketMachineTest {
     @Test
     void printerShowsQuantityUnitPriceAndTotal() {
         assertEquals("3 x Student ticket at £5.00 = £15.00", new TicketPrinter().format(new StudentTicket(3)));
+    }
+
+    @Test
+    void machineBuildsEveryTicketTypeItLists() {
+        assertEquals(List.of("Standard", "Student"), TicketMachine.ticketTypes());
+        for (String type : TicketMachine.ticketTypes()) {
+            assertEquals(type, TicketMachine.createTicket(type, 2).getType());
+        }
+        assertEquals(10.0, TicketMachine.createTicket("Student", 2).getTotalPrice(), 1e-9);
+    }
+
+    @Test
+    void unknownTicketTypeIsRefused() {
+        assertThrows(IllegalArgumentException.class, () -> TicketMachine.createTicket("Platinum", 1));
     }
 }
